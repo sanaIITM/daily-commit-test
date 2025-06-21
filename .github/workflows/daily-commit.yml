@@ -1,0 +1,23 @@
+name: Daily Commit
+
+on:
+  schedule:
+    - cron: '30 3 * * *'  # Every day at 03:30 UTC
+  workflow_dispatch:
+
+jobs:
+  daily-update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Update timestamp – 24f1000823@ds.study.iitm.ac.in
+        run: |
+          echo "Updated on $(date -u)" >> daily_log.txt
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add daily_log.txt
+          git commit -m "Daily commit: $(date -u)"
+          git push
