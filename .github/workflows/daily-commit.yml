@@ -19,6 +19,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add daily_log.txt
-          git commit -m "Daily commit at $(date -Iseconds)"
+          git commit -m "Daily commit at $(date -Iseconds)" || git commit --allow-empty -m "Forced daily commit at $(date -Iseconds)"
           git push
+
 
