@@ -13,9 +13,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
-          persist-credentials: true  # Ensure we can push
+          persist-credentials: true
 
-      - name: Update daily log timestamp
+      - name: Update timestamp – 24f1000823@ds.study.iitm.ac.in
         run: echo "Updated on $(date -Iseconds)" > daily_log.txt
 
       - name: Configure Git
@@ -23,7 +23,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-      - name: Commit and push if changed
+      - name: Commit and push – 24f1000823@ds.study.iitm.ac.in
         run: |
           git add daily_log.txt
           if ! git diff --cached --quiet; then
@@ -32,6 +32,3 @@ jobs:
           else
             echo "No changes to commit."
           fi
-
-
-
