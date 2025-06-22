@@ -2,7 +2,7 @@ name: Daily Commit
 
 on:
   schedule:
-    - cron: '30 3 * * *'  # Daily at 9:00 AM IST
+    - cron: '30 3 * * *'  # 9:00 AM IST daily
   workflow_dispatch:
 
 jobs:
@@ -12,21 +12,14 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
-        with:
-          persist-credentials: true
 
-      - name: Update or create timestamp – 24f1000823@ds.study.iitm.ac.in
+      - name: Update timestamp – 24f1000823@ds.study.iitm.ac.in
         run: echo "Updated on $(date -u +'%Y-%m-%dT%H:%M:%SZ')" > daily_log.txt
 
       - name: Commit and push – 24f1000823@ds.study.iitm.ac.in
         run: |
-          git add daily_log.txt
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git status
-          git diff --cached
-          if ! git diff --cached --quiet; then
-            git commit -m "✅ Daily commit at $(date -Iseconds)"
-            git push
-          else
-            echo "⚠️ No changes to commit"
+          git add daily_log.txt
+          git commit -m "✅ Daily commit at $(date -u +'%Y-%m-%dT%H:%M:%SZ')" || echo "Nothing to commit"
+          git push || echo "Push skipped"
